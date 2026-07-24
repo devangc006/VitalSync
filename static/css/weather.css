@@ -1,0 +1,233 @@
+/* Weather Module CSS - VitalSync */
+
+.weather-page-wrapper {
+  border-radius: var(--radius-md);
+  padding: 30px;
+  min-height: 80vh;
+  transition: background var(--transition-normal);
+}
+
+/* Dynamic background gradients matching current atmosphere */
+.condition-clear {
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.15) 0%, rgba(245, 158, 11, 0.1) 100%);
+}
+
+.condition-rain, 
+.condition-drizzle,
+.condition-thunderstorm {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(59, 130, 246, 0.15) 100%);
+}
+
+.condition-clouds {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(148, 163, 184, 0.15) 100%);
+}
+
+.weather-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+/* Header */
+.weather-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-header h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.weather-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.condition-badge {
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* Main Cards Grid */
+.weather-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .weather-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.primary-weather-card {
+  padding: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.temp-hero {
+  display: flex;
+  flex-direction: column;
+}
+
+.temp-hero .degree {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.temp-hero .desc {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-top: 10px;
+}
+
+/* CSS Weather Animation Icons */
+.weather-illustration {
+  position: relative;
+  width: 100px;
+  height: 100px;
+}
+
+.sun-glow {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--accent-orange) 40%, rgba(245, 158, 11, 0.4) 100%);
+  box-shadow: 0 0 40px var(--accent-orange);
+  animation: rotate-slow 10s infinite linear;
+}
+
+/* Atmospheric stats */
+.weather-stats-panel {
+  padding: 30px;
+}
+
+.weather-stats-panel h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 20px;
+}
+
+.stat-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+}
+
+.stat-box .icon {
+  font-size: 1.5rem;
+  width: 32px;
+  text-align: center;
+}
+
+.stat-box .info {
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-box .label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.stat-box .value {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* 7-day outlook list */
+.forecast-section {
+  padding: 30px;
+}
+
+.forecast-section h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.forecast-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 992px) {
+  .forecast-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  }
+}
+
+.forecast-card {
+  padding: 16px 10px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.forecast-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 15px rgba(6, 182, 212, 0.1);
+}
+
+.forecast-card .day-lbl {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.forecast-card .forecast-icon {
+  font-size: 1.5rem;
+  color: var(--primary);
+}
+
+.forecast-card .forecast-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.temp-range {
+  display: flex;
+  gap: 6px;
+  font-size: 0.85rem;
+}
+
+.temp-range .high {
+  font-weight: 600;
+}
+
+.temp-range .low {
+  color: var(--text-muted);
+}
+
+/* Animations */
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

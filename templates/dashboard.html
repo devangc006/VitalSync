@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - VitalSync{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+<!-- Chart.js for health indicators -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+  
+  <!-- Welcome Header -->
+  <div class="dashboard-header animate-fade-in">
+    <div>
+      <h2>Hello, {{ user.name }}!</h2>
+      <p class="subtitle">Here is your health profile status and environmental wellness outlook for <strong>{{ weather.city }}</strong>.</p>
+    </div>
+    <div class="date-badge glass-panel">
+      <i class="far fa-calendar-alt"></i>
+      <span id="current-date">July 12, 2026</span>
+    </div>
+  </div>
+
+  <!-- Top Metrics Row -->
+  <div class="metrics-grid">
+    
+    <!-- BMI Card -->
+    <div class="metric-card glass-panel bmi-card">
+      <div class="card-icon" style="color: {{ bmi_color }}"><i class="fas fa-heartbeat"></i></div>
+      <div class="card-details">
+        <h3>BMI Metric</h3>
+        <div class="bmi-value-display">
+          <span class="value">{{ user.bmi }}</span>
+          <span class="category-badge" style="background-color: {{ bmi_color }}22; color: {{ bmi_color }}">{{ bmi_cat }}</span>
+        </div>
+        <p>Height: {{ user.height }} cm | Weight: {{ user.weight }} kg</p>
+      </div>
+    </div>
+
+    <!-- Weather Card -->
+    <div class="metric-card glass-panel weather-card">
+      <div class="card-icon" style="color: var(--accent-orange)"><i class="fas fa-cloud-sun"></i></div>
+      <div class="card-details">
+        <h3>Weather in {{ weather.city }}</h3>
+        <div class="weather-value-display">
+          <span class="value">{{ weather.temperature }}&deg;C</span>
+          <span class="condition">{{ weather.condition }}</span>
+        </div>
+        <p><i class="fas fa-wind"></i> Wind: {{ weather.wind_speed }} km/h</p>
+      </div>
+    </div>
+
+    <!-- Humidity & UV Card -->
+    <div class="metric-card glass-panel env-card">
+      <div class="card-icon" style="color: var(--primary)"><i class="fas fa-sun"></i></div>
+      <div class="card-details">
+        <h3>Environment Index</h3>
+        <div class="env-grid">
+          <div class="env-item">
+            <span class="label">UV Index</span>
+            <span class="val">{{ weather.uv_index }}</span>
+          </div>
+          <div class="env-item">
+            <span class="label">Humidity</span>
+            <span class="val">{{ weather.humidity }}%</span>
+          </div>
+        </div>
+        <p>Dynamic skin & water adjustments active.</p>
+      </div>
+    </div>
+
+    <!-- Hydration Progress Card -->
+    <div class="metric-card glass-panel water-card">
+      <div class="card-icon" style="color: var(--accent-blue)"><i class="fas fa-tint"></i></div>
+      <div class="card-details">
+        <h3>Daily Hydration Goal</h3>
+        <div class="water-progress-info">
+          <span class="value"><span id="logged-water">0.0</span> / {{ water_goal }} L</span>
+          <button class="add-water-btn" id="log-water-btn"><i class="fas fa-plus"></i> Add 250ml</button>
+        </div>
+        <div class="progress-bar-container">
+          <div class="progress-bar-fill" id="water-progress-bar" style="width: 0%"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Recommendations and Main Grid -->
+  <div class="dashboard-main-grid">
+    
+    <!-- Left Column: Recommendations & Charts -->
+    <div class="left-column">
+      
+      <!-- Recommendations -->
+      <div class="dashboard-section glass-panel">
+        <div class="section-title">
+          <i class="fas fa-lightbulb"></i>
+          <h3>Tailored Wellness Tips</h3>
+        </div>
+        <div class="recommendations-list">
+          {% for rec in recommendations %}
+          <div class="recommendation-item category-{{ rec.category }}">
+            <div class="rec-icon"><i class="fas {{ rec.icon }}"></i></div>
+            <div class="rec-content">
+              <h4>{{ rec.title }}</h4>
+              <p>{{ rec.text }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Charts Card -->
+      <div class="dashboard-section glass-panel">
+        <div class="section-title">
+          <i class="fas fa-chart-line"></i>
+          <h3>Weekly Activity & Hydration History</h3>
+        </div>
+        <div class="chart-container">
+          <canvas id="health-chart"></canvas>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Recent Activities & Notifications -->
+    <div class="right-column">
+      
+      <!-- Notifications -->
+      <div class="dashboard-section glass-panel">
+        <div class="section-title">
+          <i class="fas fa-bell"></i>
+          <h3>Recent Alerts</h3>
+        </div>
+        <div class="notifications-list">
+          {% for notif in notifications %}
+          <div class="notification-item">
+            <div class="notif-header">
+              <h4>{{ notif.title }}</h4>
+              <span class="time">{{ notif.time }}</span>
+            </div>
+            <p>{{ notif.text }}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      <!-- Activities Log -->
+      <div class="dashboard-section glass-panel">
+        <div class="section-title">
+          <i class="fas fa-history"></i>
+          <h3>Recent Activities</h3>
+        </div>
+        <div class="activities-list">
+          {% for act in activities %}
+          <div class="activity-item">
+            <span class="activity-time">{{ act.time }}</span>
+            <div class="activity-desc">
+              <h4>{{ act.title }}</h4>
+              <p>{{ act.desc }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // Transfer python values to client side JS simply
+  const dailyWaterGoal = {{ water_goal }};
+</script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

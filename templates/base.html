@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}VitalSync - Health & Environmental Wellness{% endblock %}</title>
+  
+  <!-- FontAwesome for medical & utility icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Core Design System CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  
+  {% block head %}{% endblock %}
+</head>
+<body>
+
+  <div id="app-container" class="{% if hide_sidebar_navbar %}no-sidebar{% endif %}">
+    <!-- Sidebar Left Navigation -->
+    {% if not hide_sidebar_navbar %}
+      {% include 'sidebar.html' %}
+    {% endif %}
+
+    <div id="main-content-wrapper">
+      <!-- Navbar Top Header -->
+      {% if not hide_sidebar_navbar %}
+        {% include 'navbar.html' %}
+      {% endif %}
+
+      <!-- Page Content Insertion Point -->
+      <main {% if hide_sidebar_navbar %}style="margin-top: 0; padding: 0;"{% endif %}>
+        {% block content %}{% endblock %}
+      </main>
+
+      <!-- Footer Branding -->
+      {% include 'footer.html' %}
+    </div>
+  </div>
+
+  <!-- Core Client-side responsive logic -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  
+  {% block scripts %}{% endblock %}
+</body>
+</html>

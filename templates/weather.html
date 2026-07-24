@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Weather Data - VitalSync{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/weather.css') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Dynamic weather-themed background wrapper -->
+<div class="weather-page-wrapper condition-{{ weather.condition | lower }} animate-fade-in">
+  
+  <div class="weather-container">
+    
+    <!-- Title & Location Info -->
+    <div class="weather-header">
+      <div>
+        <h2>Weather Environment</h2>
+        <p class="subtitle"><i class="fas fa-map-marker-alt"></i> Current indicators for <strong>{{ weather.city }}</strong></p>
+      </div>
+      <div class="condition-badge glass-panel">
+        <i class="fas {% if weather.condition == 'Clear' %}fa-sun{% elif weather.condition == 'Rain' %}fa-cloud-showers-heavy{% else %}fa-cloud{% endif %}"></i>
+        <span>{{ weather.condition }}</span>
+      </div>
+    </div>
+
+    <!-- Main Weather Panels -->
+    <div class="weather-main-grid">
+      
+      <!-- Primary Temp Widget -->
+      <div class="primary-weather-card glass-panel">
+        <div class="temp-hero">
+          <span class="degree">{{ weather.temperature }}&deg;C</span>
+          <span class="desc">{{ weather.description }}</span>
+        </div>
+        <div class="weather-illustration">
+          <!-- Animated CSS weather states -->
+          <div class="cloudy-anim-icon">
+            {% if weather.condition == 'Clear' %}
+              <div class="sun-glow"></div>
+            {% elif weather.condition == 'Rain' %}
+              <div class="rain-cloud"></div>
+              <div class="rain-drops"></div>
+            {% else %}
+              <div class="cloud-one"></div>
+              <div class="cloud-two"></div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Secondary Detailed Parameters -->
+      <div class="weather-stats-panel glass-panel">
+        <h3>Atmospheric Metrics</h3>
+        <div class="stats-grid">
+          
+          <div class="stat-box">
+            <span class="icon" style="color: var(--accent-blue)"><i class="fas fa-tint"></i></span>
+            <div class="info">
+              <span class="label">Humidity</span>
+              <span class="value">{{ weather.humidity }} %</span>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <span class="icon" style="color: var(--accent-orange)"><i class="fas fa-sun"></i></span>
+            <div class="info">
+              <span class="label">UV Radiation</span>
+              <span class="value">{{ weather.uv_index }} UV</span>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <span class="icon" style="color: var(--primary)"><i class="fas fa-wind"></i></span>
+            <div class="info">
+              <span class="label">Wind Speed</span>
+              <span class="value">{{ weather.wind_speed }} km/h</span>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <span class="icon" style="color: #a855f7"><i class="fas fa-tachometer-alt"></i></span>
+            <div class="info">
+              <span class="label">Pressure</span>
+              <span class="value">{{ weather.pressure }} hPa</span>
+            </div>
+          </div>
+
+          <div class="stat-box">
+            <span class="icon" style="color: #ec4899"><i class="fas fa-eye"></i></span>
+            <div class="info">
+              <span class="label">Visibility</span>
+              <span class="value">{{ weather.visibility }} km</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 7-day forecast section -->
+    <div class="forecast-section glass-panel">
+      <h3>7-Day Outlook Forecast</h3>
+      <div class="forecast-grid">
+        {% for day in weather.forecast %}
+        <div class="forecast-card glass-panel">
+          <span class="day-lbl">{{ day.day[:3] }}</span>
+          <div class="forecast-icon"><i class="fas {{ day.icon }}"></i></div>
+          <span class="forecast-desc">{{ day.condition }}</span>
+          <div class="temp-range">
+            <span class="high">{{ day.temp_high }}&deg;</span>
+            <span class="low">{{ day.temp_low }}&deg;</span>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/weather.js') }}"></script>
+{% endblock %}

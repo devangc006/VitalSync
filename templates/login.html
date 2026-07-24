@@ -1,0 +1,79 @@
+{% set hide_sidebar_navbar = True %}
+{% extends "base.html" %}
+
+{% block title %}Sign In - VitalSync{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <div class="auth-card glass-panel animate-fade-in">
+    <div class="auth-header">
+      <div class="brand">
+        <i class="fas fa-heartbeat"></i>
+        <span>VitalSync</span>
+      </div>
+      <h2>Welcome Back</h2>
+      <p>Log in to access your personal environmental wellness indicators.</p>
+    </div>
+
+    <!-- Flash message warnings -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form action="/login" method="POST" id="login-form">
+      <div class="form-group">
+        <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+        <input type="email" id="email" name="email" required placeholder="name@example.com">
+      </div>
+
+      <div class="form-group">
+        <label for="password"><i class="fas fa-lock"></i> Password</label>
+        <input type="password" id="password" name="password" required placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;">
+      </div>
+
+      <div class="form-options">
+        <label class="checkbox-container">
+          <input type="checkbox" name="remember" id="remember">
+          <span class="checkmark"></span>
+          Remember Me
+        </label>
+        <a href="#" class="forgot-password" id="forgot-password-trigger">Forgot Password?</a>
+      </div>
+
+      <button type="submit" class="btn btn-primary auth-submit-btn">
+        <span>Sign In</span>
+        <i class="fas fa-sign-in-alt"></i>
+      </button>
+    </form>
+
+    <div class="auth-divider">
+      <span>or continue with</span>
+    </div>
+
+    <div class="social-login">
+      <button class="btn btn-outline btn-social" id="google-signin-btn">
+        <i class="fab fa-google"></i> Google
+      </button>
+    </div>
+
+    <div class="auth-footer">
+      <p>Don't have an account? <a href="/register">Sign Up Now</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+{% endblock %}

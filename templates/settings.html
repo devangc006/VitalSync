@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}Settings - VitalSync{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="settings-container animate-fade-in">
+  
+  <!-- Header Title -->
+  <div class="page-header">
+    <div>
+      <h2>User Settings</h2>
+      <p class="subtitle">Manage notifications, dark mode, refresh thresholds, passwords, and security controls.</p>
+    </div>
+  </div>
+
+  <!-- Messages feedback -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+          <span>{{ message }}</span>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Layout splits -->
+  <div class="settings-layout-grid">
+    
+    <!-- Left Column: Preference controls -->
+    <div class="settings-section-card glass-panel">
+      <h3>App Preferences</h3>
+      <p class="desc-text">Customize how VitalSync behaves for notifications and refresh rates.</p>
+      
+      <form action="/settings" method="POST">
+        <input type="hidden" name="action" value="preferences">
+        
+        <!-- Toggle Toggles -->
+        <div class="setting-toggle-item">
+          <div class="label-info">
+            <span class="title">Email Alerts</span>
+            <span class="sub">Receive daily summaries and high heat notifications.</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" name="email_notif" {% if settings.email_notifications == 1 %}checked{% endif %}>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-toggle-item">
+          <div class="label-info">
+            <span class="title">SMS Alerts</span>
+            <span class="sub">Receive emergency UV index and hydration alerts on phone.</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" name="sms_notif" {% if settings.sms_notifications == 1 %}checked{% endif %}>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <div class="setting-toggle-item">
+          <div class="label-info">
+            <span class="title">Dark Mode Theme</span>
+            <span class="sub">Switch app color system theme colors.</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="dark-mode-toggle" name="dark_mode" {% if settings.dark_mode == 1 %}checked{% endif %}>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <!-- Weather intervals selection -->
+        <div class="form-group" style="margin-top: 20px;">
+          <label for="refresh_interval"><i class="fas fa-history"></i> Weather Refresh Frequency</label>
+          <select id="refresh_interval" name="refresh_interval">
+            <option value="15" {% if settings.weather_refresh_interval == 15 %}selected{% endif %}>Every 15 Minutes</option>
+            <option value="30" {% if settings.weather_refresh_interval == 30 %}selected{% endif %}>Every 30 Minutes</option>
+            <option value="60" {% if settings.weather_refresh_interval == 60 %}selected{% endif %}>Every 1 Hour (Recommended)</option>
+            <option value="120" {% if settings.weather_refresh_interval == 120 %}selected{% endif %}>Every 2 Hours</option>
+          </select>
+        </div>
+
+        <div class="section-actions" style="margin-top: 30px;">
+          <button type="submit" class="btn btn-primary">Save Preferences</button>
+          <button type="reset" class="btn btn-outline">Reset</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Right Column: Password and Security -->
+    <div class="right-column-settings">
+      
+      <!-- Change Password -->
+      <div class="settings-section-card glass-panel">
+        <h3>Change Password</h3>
+        <p class="desc-text">Update security credentials regularly.</p>
+        
+        <form action="/settings" method="POST" id="password-change-form">
+          <input type="hidden" name="action" value="password">
+          
+          <div class="form-group">
+            <label for="old_password">Current Password</label>
+            <input type="password" id="old_password" name="old_password" required placeholder="Enter current password">
+          </div>
+
+          <div class="form-group">
+            <label for="new_password">New Password</label>
+            <input type="password" id="new_password" name="new_password" required placeholder="Minimum 8 characters">
+          </div>
+
+          <div class="form-group">
+            <label for="confirm_new_password">Confirm New Password</label>
+            <input type="password" id="confirm_new_password" required placeholder="Re-type new password">
+          </div>
+
+          <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Update Password</button>
+        </form>
+      </div>
+
+      <!-- Delete Account Card -->
+      <div class="settings-section-card glass-panel danger-zone-card">
+        <h3>Danger Zone</h3>
+        <p class="desc-text">Actions here are permanent and cannot be undone.</p>
+        
+        <div class="danger-zone-action">
+          <div class="text">
+            <h4>Delete Account Permanently</h4>
+            <p>Erase physical metrics profiles, settings configurations, and history logs from database.</p>
+          </div>
+          <form action="/settings/delete" method="POST" onsubmit="return confirm('WARNING: Are you sure you want to delete your profile permanently? This action is irreversible.');">
+            <button type="submit" class="btn btn-outline btn-danger">Delete Account</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+{% endblock %}

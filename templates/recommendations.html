@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Wellness Tips - VitalSync{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/recommendations.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="recommendations-container animate-fade-in">
+  
+  <!-- Header block -->
+  <div class="page-header">
+    <div>
+      <h2>Personalized Wellness Guidance</h2>
+      <p class="subtitle">Real-time suggestions calculated based on your biometrics in <strong>{{ weather.city }}</strong> (Temp: {{ weather.temperature }}&deg;C, UV: {{ weather.uv_index }}).</p>
+    </div>
+  </div>
+
+  <!-- Category Filter Menu -->
+  <div class="filter-tab-bar glass-panel">
+    <button class="filter-tab active" data-filter="all">All Tips</button>
+    <button class="filter-tab" data-filter="hydration"><i class="fas fa-tint"></i> Hydration</button>
+    <button class="filter-tab" data-filter="uv"><i class="fas fa-sun"></i> UV Safety</button>
+    <button class="filter-tab" data-filter="skincare"><i class="fas fa-spa"></i> Skin Care</button>
+    <button class="filter-tab" data-filter="attire"><i class="fas fa-tshirt"></i> Attire</button>
+    <button class="filter-tab" data-filter="exercise"><i class="fas fa-running"></i> Exercise</button>
+  </div>
+
+  <!-- Cards list grid -->
+  <div class="recommendation-cards-grid">
+    {% for rec in recommendations %}
+    <div class="rec-card glass-panel filter-item level-{{ rec.alert_level }}" data-category="{{ rec.category }}">
+      <div class="card-status-strip"></div>
+      <div class="rec-card-body">
+        <div class="rec-card-header">
+          <div class="icon-circle"><i class="fas {{ rec.icon }}"></i></div>
+          <span class="category-tag">{{ rec.category | upper }}</span>
+        </div>
+        <h3>{{ rec.title }}</h3>
+        <p class="desc">{{ rec.text }}</p>
+        <div class="card-footer-info">
+          <span class="priority-label"><i class="fas fa-info-circle"></i> Priority: {{ rec.alert_level | capitalize }}</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/recommendations.js') }}"></script>
+{% endblock %}

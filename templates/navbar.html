@@ -1,0 +1,34 @@
+<header class="navbar glass-panel">
+  <!-- Left Side: Toggle menu button for mobile + branding/view info -->
+  <div class="navbar-brand">
+    <button class="nav-action-btn menu-toggle" id="menu-toggle" aria-label="Toggle Navigation Menu">
+      <i class="fas fa-bars"></i>
+    </button>
+    <h1>VitalSync Wellness</h1>
+  </div>
+
+  <!-- Right Side: Action buttons and User Profile Badge -->
+  <div class="navbar-actions">
+    <!-- Notifications Placeholder -->
+    <button class="nav-action-btn" aria-label="View Notifications">
+      <i class="fas fa-bell"></i>
+    </button>
+
+    <!-- User Badge -->
+    {% if session.get('user_id') %}
+    <div class="user-profile-badge">
+      <div class="user-avatar">
+        {{ session.get('user_name', 'U')[0] | upper }}
+      </div>
+      <span>{{ session.get('user_name', 'User') }}</span>
+    </div>
+    {% else %}
+    <a href="/login" class="user-profile-badge" style="text-decoration: none; color: inherit;">
+      <div class="user-avatar">
+        <i class="fas fa-sign-in-alt"></i>
+      </div>
+      <span>Sign In</span>
+    </a>
+    {% endif %}
+  </div>
+</header>

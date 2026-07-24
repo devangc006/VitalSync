@@ -1,0 +1,341 @@
+/* Dashboard Page CSS */
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+
+/* Dashboard Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+}
+
+.dashboard-header h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--primary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dashboard-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.date-badge {
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* Metrics Row */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.metric-card {
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.metric-card .card-icon {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.metric-card .card-details {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metric-card .card-details h3 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+}
+
+.metric-card .card-details p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.bmi-value-display,
+.weather-value-display {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.bmi-value-display .value,
+.weather-value-display .value {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.category-badge {
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.weather-value-display .condition {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+/* Env Indicators */
+.env-grid {
+  display: flex;
+  gap: 20px;
+  margin: 4px 0;
+}
+
+.env-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.env-item .label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.env-item .val {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* Water tracker progress styles */
+.water-progress-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.water-progress-info .value {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.add-water-btn {
+  background: var(--primary-light);
+  border: 1px solid var(--primary);
+  color: var(--primary);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.add-water-btn:hover {
+  background: var(--primary);
+  color: #fff;
+}
+
+.progress-bar-container {
+  height: 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 6px;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-blue) 0%, var(--primary) 100%);
+  border-radius: 3px;
+  transition: width 0.4s ease;
+}
+
+/* Layout Split Panels */
+.dashboard-main-grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 992px) {
+  .dashboard-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dashboard-section {
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.section-title i {
+  color: var(--primary);
+  font-size: 1.1rem;
+}
+
+.section-title h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Recommendations List */
+.recommendations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.recommendation-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-border);
+}
+
+.recommendation-item .rec-icon {
+  font-size: 1.25rem;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.category-hydration .rec-icon { background: rgba(59, 130, 246, 0.1); color: var(--accent-blue); }
+.category-uv .rec-icon { background: rgba(245, 158, 11, 0.1); color: var(--accent-orange); }
+.category-skincare .rec-icon { background: rgba(16, 185, 129, 0.1); color: var(--accent-mint); }
+.category-exercise .rec-icon { background: rgba(6, 182, 212, 0.1); color: var(--primary); }
+
+.recommendation-item h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.recommendation-item p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+/* Chart */
+.chart-container {
+  position: relative;
+  height: 250px;
+  width: 100%;
+}
+
+/* Right Column Panels */
+.notifications-list,
+.activities-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.notification-item {
+  padding: 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+}
+
+.notif-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.notif-header h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.notif-header .time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.notification-item p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.activity-item {
+  display: flex;
+  gap: 16px;
+}
+
+.activity-time {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  width: 65px;
+  flex-shrink: 0;
+  text-align: right;
+  padding-top: 2px;
+}
+
+.activity-desc {
+  border-left: 2px solid var(--primary-light);
+  padding-left: 16px;
+  padding-bottom: 12px;
+}
+
+.activity-desc h4 {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.activity-desc p {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}

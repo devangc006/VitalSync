@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+
+{% block title %}My Profile - VitalSync{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="profile-container animate-fade-in">
+  
+  <div class="profile-layout-grid">
+    
+    <!-- Left Column: Avatar & Summary -->
+    <div class="profile-sidebar-panel glass-panel">
+      <div class="avatar-container">
+        <div class="profile-avatar">
+          {{ user.name[0] | upper }}
+        </div>
+        <button class="change-avatar-btn" id="upload-avatar-mock"><i class="fas fa-camera"></i> Change Photo</button>
+      </div>
+      <div class="profile-summary-details">
+        <h2>{{ user.name }}</h2>
+        <p class="email-sub">{{ user.email }}</p>
+        <span class="badge" style="margin-top: 15px;">{{ user.city }}</span>
+      </div>
+      <div class="quick-stats">
+        <div class="q-stat">
+          <span class="val">{{ user.bmi }}</span>
+          <span class="lbl">BMI</span>
+        </div>
+        <div class="q-stat">
+          <span class="val">{{ user.height }} cm</span>
+          <span class="lbl">Height</span>
+        </div>
+        <div class="q-stat">
+          <span class="val">{{ user.weight }} kg</span>
+          <span class="lbl">Weight</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Profile Form -->
+    <div class="profile-form-panel glass-panel">
+      <div class="panel-header">
+        <h3>Edit Personal Information</h3>
+        <p>Modify your biometrics and location parameters to sync recommendations.</p>
+      </div>
+
+      <!-- Flash alerts -->
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+              <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+              <span>{{ message }}</span>
+            </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+
+      <form action="/profile" method="POST" id="profile-edit-form">
+        <div class="form-grid">
+          
+          <div class="form-group">
+            <label for="name"><i class="fas fa-user"></i> Full Name</label>
+            <input type="text" id="name" name="name" value="{{ user.name }}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email"><i class="fas fa-envelope"></i> Email Address (Cannot Edit)</label>
+            <input type="email" id="email" value="{{ user.email }}" disabled style="opacity: 0.6; cursor: not-allowed;">
+          </div>
+
+          <div class="form-group">
+            <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+            <input type="tel" id="phone" name="phone" value="{{ user.phone }}">
+          </div>
+
+          <div class="form-group">
+            <label for="city"><i class="fas fa-map-marker-alt"></i> City</label>
+            <input type="text" id="city" name="city" value="{{ user.city }}" required>
+          </div>
+
+          <div class="form-group">
+            <label for="age"><i class="fas fa-calendar-alt"></i> Age</label>
+            <input type="number" id="age" name="age" value="{{ user.age }}" required min="1" max="120">
+          </div>
+
+          <div class="form-group">
+            <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+            <select id="gender" name="gender" required>
+              <option value="Male" {% if user.gender == 'Male' %}selected{% endif %}>Male</option>
+              <option value="Female" {% if user.gender == 'Female' %}selected{% endif %}>Female</option>
+              <option value="Other" {% if user.gender == 'Other' %}selected{% endif %}>Other</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="height"><i class="fas fa-ruler-vertical"></i> Height (cm)</label>
+            <input type="number" id="height" name="height" value="{{ user.height }}" required min="50" max="250">
+          </div>
+
+          <div class="form-group">
+            <label for="weight"><i class="fas fa-weight"></i> Weight (kg)</label>
+            <input type="number" id="weight" name="weight" value="{{ user.weight }}" required min="10" max="300">
+          </div>
+
+          <div class="form-group">
+            <label for="skin_type"><i class="fas fa-palette"></i> Skin Type</label>
+            <select id="skin_type" name="skin_type" required>
+              <option value="Type I (Very Fair)" {% if user.skin_type == 'Type I (Very Fair)' %}selected{% endif %}>Type I (Very Fair, always burns)</option>
+              <option value="Type II (Fair)" {% if user.skin_type == 'Type II (Fair)' %}selected{% endif %}>Type II (Fair, burns easily)</option>
+              <option value="Type III (Medium)" {% if user.skin_type == 'Type III (Medium)' %}selected{% endif %}>Type III (Medium, sometimes burns)</option>
+              <option value="Type IV (Olive)" {% if user.skin_type == 'Type IV (Olive)' %}selected{% endif %}>Type IV (Olive, rarely burns)</option>
+              <option value="Type V (Dark Brown)" {% if user.skin_type == 'Type V (Dark Brown)' %}selected{% endif %}>Type V (Dark Brown, very rarely burns)</option>
+              <option value="Type VI (Black)" {% if user.skin_type == 'Type VI (Black)' %}selected{% endif %}>Type VI (Black, never burns)</option>
+            </select>
+          </div>
+
+          <!-- BMI Calculator Indicator -->
+          <div class="form-group">
+            <div class="profile-bmi-box glass-panel">
+              <span class="lbl">Calculated New BMI</span>
+              <span class="val" id="profile-bmi-val">{{ user.bmi }}</span>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Save Changes</button>
+          <a href="/dashboard" class="btn btn-outline">Cancel</a>
+        </div>
+      </form>
+
+    </div>
+
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/profile.js') }}"></script>
+{% endblock %}

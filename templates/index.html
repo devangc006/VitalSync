@@ -1,0 +1,124 @@
+{% set hide_sidebar_navbar = True %}
+{% extends "base.html" %}
+
+{% block title %}VitalSync - Health & Environmental Wellness{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="landing-container">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <span class="badge">Environmental Health Intelligence</span>
+      <h1>Your Personal Health, <br><span class="highlight">Sync'd with Nature</span></h1>
+      <p>VitalSync analyzes your personal vitals and real-time environmental factors to deliver actionable, daily wellness recommendations.</p>
+      <div class="cta-group">
+        <a href="/register" class="btn btn-primary">Get Started Free <i class="fas fa-arrow-right"></i></a>
+        <a href="/login" class="btn btn-outline">Sign In</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="illustration-container glass-panel">
+        <div class="pulse-circle"></div>
+        <div class="floating-icons">
+          <i class="fas fa-heartbeat icon-heartbeat"></i>
+          <i class="fas fa-cloud-sun icon-sun"></i>
+          <i class="fas fa-tint icon-water"></i>
+          <i class="fas fa-spa icon-spa"></i>
+        </div>
+        <div class="vital-chart-mock">
+          <div class="bar bar-1"></div>
+          <div class="bar bar-2"></div>
+          <div class="bar bar-3"></div>
+          <div class="bar bar-4"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features-section">
+    <div class="section-header">
+      <h2>Advanced Wellness Features</h2>
+      <p>Precision health indicators meet real-time environmental APIs.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card glass-panel">
+        <div class="feature-icon"><i class="fas fa-dumbbell"></i></div>
+        <h3>Custom Workouts</h3>
+        <p>Personalized exercises matched directly with outdoor weather, wind, and humidity indices.</p>
+      </div>
+      <div class="feature-card glass-panel">
+        <div class="feature-icon"><i class="fas fa-tint"></i></div>
+        <h3>Hydration Tracking</h3>
+        <p>Dynamic calculations adjusting daily water intake thresholds based on temperature metrics.</p>
+      </div>
+      <div class="feature-card glass-panel">
+        <div class="feature-icon"><i class="fas fa-sun"></i></div>
+        <h3>UV Alert System</h3>
+        <p>Active warnings protecting skin layers depending on real-time solar intensity levels.</p>
+      </div>
+      <div class="feature-card glass-panel">
+        <div class="feature-icon"><i class="fas fa-spa"></i></div>
+        <h3>Skin Care Tips</h3>
+        <p>Advice aligned to your specific dermatology type, temperature levels, and environment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section glass-panel">
+    <div class="about-grid">
+      <div class="about-text">
+        <h2>About VitalSync</h2>
+        <p>VitalSync was founded on the idea that health isn't static—it reacts dynamically to the world around us. By merging personal physiological metrics with localized meteorological feeds, we empower individuals to make smarter health choices every single day.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item">
+          <h4>100%</h4>
+          <p>Personalized Recommendations</p>
+        </div>
+        <div class="stat-item">
+          <h4>Real-time</h4>
+          <p>Weather Tracking API</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works Section -->
+  <section class="how-it-works">
+    <div class="section-header">
+      <h2>How It Works</h2>
+      <p>Three simple steps to smarter daily routines.</p>
+    </div>
+    <div class="steps-container">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Create Profile</h3>
+        <p>Enter your vitals (height, weight, age, skin type) to establish your health baseline.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Sync Environment</h3>
+        <p>We retrieve real-time climate, UV index, and localized conditions for your city.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>Receive Vitals Guidance</h3>
+        <p>Get tailored suggestions on hydration, exercise, attire, and solar protection.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call To Action -->
+  <section class="cta-section glass-panel">
+    <h2>Ready to Sync Your Health?</h2>
+    <p>Sign up now to start receiving customized daily routines tailored to you and the weather.</p>
+    <a href="/register" class="btn btn-primary btn-large">Create Your Profile <i class="fas fa-user-plus"></i></a>
+  </section>
+</div>
+{% endblock %}

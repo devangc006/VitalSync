@@ -1,0 +1,49 @@
+<aside class="sidebar glass-panel">
+  <div>
+    <!-- Logo & Brand Header -->
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <i class="fas fa-heartbeat"></i>
+        <span>VitalSync</span>
+      </div>
+    </div>
+
+    <!-- Navigation List -->
+    <nav class="sidebar-nav">
+      <a href="/dashboard" class="sidebar-link">
+        <i class="fas fa-chart-pie"></i>
+        <span>Dashboard</span>
+      </a>
+      <a href="/profile" class="sidebar-link">
+        <i class="fas fa-user-circle"></i>
+        <span>My Profile</span>
+      </a>
+      <a href="/weather" class="sidebar-link">
+        <i class="fas fa-cloud-sun-rain"></i>
+        <span>Weather Data</span>
+      </a>
+      <a href="/recommendations" class="sidebar-link">
+        <i class="fas fa-lightbulb"></i>
+        <span>Wellness Tips</span>
+      </a>
+      <a href="/history" class="sidebar-link">
+        <i class="fas fa-history"></i>
+        <span>History Log</span>
+      </a>
+      <a href="/settings" class="sidebar-link">
+        <i class="fas fa-cog"></i>
+        <span>Settings</span>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Bottom Options / Session actions -->
+  <div>
+    {% if session.get('user_id') %}
+    <a href="/auth/logout" class="sidebar-link" style="color: var(--accent-red);">
+      <i class="fas fa-sign-out-alt"></i>
+      <span>Sign Out</span>
+    </a>
+    {% endif %}
+  </div>
+</aside>

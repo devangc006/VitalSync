@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+
+{% block title %}Recommendation History - VitalSync{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/history.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="history-container animate-fade-in">
+  
+  <!-- Header Title -->
+  <div class="page-header">
+    <div>
+      <h2>Wellness History Log</h2>
+      <p class="subtitle">Track and analyze all historical recommendations synchronized on your profile.</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-outline" id="export-pdf-btn"><i class="fas fa-file-pdf"></i> Export PDF</button>
+      <form action="/history/clear" method="POST" onsubmit="return confirm('Are you sure you want to clear all history?');" style="display: inline;">
+        <button type="submit" class="btn btn-outline" style="color: var(--accent-red); border-color: rgba(239, 68, 68, 0.3);"><i class="fas fa-trash-alt"></i> Clear All</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Messages feedback -->
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+          <span>{{ message }}</span>
+        </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <!-- Control Controls Panel -->
+  <div class="controls-panel glass-panel">
+    <div class="search-box">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="history-search" placeholder="Search logs by keyword...">
+    </div>
+    <div class="filters-group">
+      <div class="select-wrapper">
+        <select id="filter-category">
+          <option value="all">All Categories</option>
+          <option value="hydration">Hydration</option>
+          <option value="uv">UV Safety</option>
+          <option value="skincare">Skin Care</option>
+          <option value="attire">Attire</option>
+          <option value="exercise">Exercise</option>
+        </select>
+      </div>
+      <div class="select-wrapper">
+        <select id="sort-order">
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="category">Category A-Z</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Table Panel -->
+  <div class="table-panel glass-panel">
+    <div class="table-responsive">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Date / Time</th>
+            <th>Location</th>
+            <th>Weather Context</th>
+            <th>Category</th>
+            <th>Recommendation Title</th>
+            <th>Advice Details</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="history-table-body">
+          {% if logs %}
+            {% for log in logs %}
+            <tr class="history-row" data-id="{{ log.id }}" data-category="{{ log.category }}" data-date="{{ log.created_at }}">
+              <td class="date-cell">{{ log.created_at }}</td>
+              <td>{{ log.city }}</td>
+              <td class="weather-context-cell">{{ log.temperature }}&deg;C, {{ log.uv_index }} UV</td>
+              <td><span class="category-pill pill-{{ log.category }}">{{ log.category | upper }}</span></td>
+              <td class="title-cell"><strong>{{ log.title }}</strong></td>
+              <td class="text-cell">{{ log.recommendation_text }}</td>
+              <td>
+                <button class="delete-row-btn" data-id="{{ log.id }}" aria-label="Delete Log Record"><i class="fas fa-trash"></i></button>
+              </td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr class="no-logs-row">
+              <td colspan="7">No recommendation records logged yet. Check your dashboard to auto-generate daily advice.</td>
+            </tr>
+          {% endif %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/history.js') }}"></script>
+{% endblock %}

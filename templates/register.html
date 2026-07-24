@@ -1,0 +1,132 @@
+{% set hide_sidebar_navbar = True %}
+{% extends "base.html" %}
+
+{% block title %}Sign Up - VitalSync{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+  <div class="auth-card register-card glass-panel animate-fade-in">
+    <div class="auth-header">
+      <div class="brand">
+        <i class="fas fa-heartbeat"></i>
+        <span>VitalSync</span>
+      </div>
+      <h2>Create Health Profile</h2>
+      <p>Enter your physiological parameters to configure daily wellness metrics.</p>
+    </div>
+
+    <!-- Flash message warning -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">
+            <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i>
+            <span>{{ message }}</span>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form action="/register" method="POST" id="register-form">
+      <div class="form-grid">
+        <!-- Account Info -->
+        <div class="form-group">
+          <label for="name"><i class="fas fa-user"></i> Full Name</label>
+          <input type="text" id="name" name="name" required placeholder="John Doe">
+        </div>
+
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Email Address</label>
+          <input type="email" id="email" name="email" required placeholder="name@example.com">
+        </div>
+
+        <div class="form-group">
+          <label for="phone"><i class="fas fa-phone"></i> Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000">
+        </div>
+
+        <div class="form-group">
+          <label for="city"><i class="fas fa-map-marker-alt"></i> City</label>
+          <input type="text" id="city" name="city" required placeholder="e.g. New York">
+        </div>
+
+        <!-- Biometrics -->
+        <div class="form-group">
+          <label for="age"><i class="fas fa-calendar-alt"></i> Age</label>
+          <input type="number" id="age" name="age" required min="1" max="120" placeholder="e.g. 28">
+        </div>
+
+        <div class="form-group">
+          <label for="gender"><i class="fas fa-venus-mars"></i> Gender</label>
+          <select id="gender" name="gender" required>
+            <option value="" disabled selected>Select Gender</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="height"><i class="fas fa-ruler-vertical"></i> Height (cm)</label>
+          <input type="number" id="height" name="height" required min="50" max="250" placeholder="e.g. 175">
+        </div>
+
+        <div class="form-group">
+          <label for="weight"><i class="fas fa-weight"></i> Weight (kg)</label>
+          <input type="number" id="weight" name="weight" required min="10" max="300" placeholder="e.g. 70">
+        </div>
+
+        <div class="form-group">
+          <label for="skin_type"><i class="fas fa-palette"></i> Skin Type (Fitzpatrick scale)</label>
+          <select id="skin_type" name="skin_type" required>
+            <option value="" disabled selected>Select Skin Type</option>
+            <option value="Type I (Very Fair)">Type I (Very Fair, always burns)</option>
+            <option value="Type II (Fair)">Type II (Fair, burns easily)</option>
+            <option value="Type III (Medium)">Type III (Medium, sometimes burns)</option>
+            <option value="Type IV (Olive)">Type IV (Olive, rarely burns)</option>
+            <option value="Type V (Dark Brown)">Type V (Dark Brown, very rarely burns)</option>
+            <option value="Type VI (Black)">Type VI (Black, never burns)</option>
+          </select>
+        </div>
+
+        <!-- Real-time BMI Display Box -->
+        <div class="form-group bmi-box-container">
+          <div class="bmi-display-box glass-panel">
+            <span class="bmi-label">Your Calculated BMI</span>
+            <span class="bmi-value" id="bmi-val">--</span>
+            <span class="bmi-category" id="bmi-cat">Enter weight & height</span>
+          </div>
+        </div>
+
+        <!-- Security -->
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> Password</label>
+          <input type="password" id="password" name="password" required placeholder="Minimum 8 characters">
+        </div>
+
+        <div class="form-group">
+          <label for="confirm_password"><i class="fas fa-lock"></i> Confirm Password</label>
+          <input type="password" id="confirm_password" name="confirm_password" required placeholder="Re-type password">
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary auth-submit-btn" style="margin-top: 20px;">
+        <span>Create Account & Sync</span>
+        <i class="fas fa-user-plus"></i>
+      </button>
+    </form>
+
+    <div class="auth-footer" style="margin-top: 30px;">
+      <p>Already have an account? <a href="/login">Sign In Here</a></p>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/register.js') }}"></script>
+{% endblock %}
